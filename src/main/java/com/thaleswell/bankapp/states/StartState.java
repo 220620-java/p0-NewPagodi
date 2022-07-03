@@ -36,7 +36,7 @@ public class StartState extends BankAppState {
             "\n" +
             "1) Login\n" +
             "2) Create a new account.\n" +
-            "3) Exit the system.\n" +
+            "q) Exit the system.\n" +
             "\n";
     }
 
@@ -47,12 +47,12 @@ public class StartState extends BankAppState {
         switch (input) {
 
         case "1":
-            getIO().send("Not implemented.");
+            nextState = new GetUsernameState(getIO(),UserReason.LOGIN);
             break;
         case "2":
             getIO().send("Not implemented.");
             break;
-        case "3":
+        case "q":
             getIO().send("bye.");
             nextState = new FinalState(getIO());
             break;
@@ -61,7 +61,7 @@ public class StartState extends BankAppState {
             break;
         }
 
-        if (!parseSucess) {
+        if ( !parseSucess ) {
             getIO().send("Invalid input. Please try again.");
         }
     }
