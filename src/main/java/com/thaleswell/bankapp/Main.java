@@ -18,7 +18,9 @@ public class Main {
 
         // Create a DummyBankService for our TUI states.
         DummyBankService bankServices = new DummyBankService(consoleIO);
+        DataServiceBundle dataServiceBundle = new DataServiceBundle();
         BankAppState.setBankService(bankServices);
+        BankAppState.setDataServiceBundle(dataServiceBundle);
 
         // Create a new start state and run the TUI loop.
         StartState start = new StartState(consoleIO);
