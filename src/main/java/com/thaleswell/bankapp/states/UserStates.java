@@ -44,6 +44,7 @@ class GetPasswordState extends BankAppState {
             }
             else {
                 getIO().sendLine("Login Successful");
+                BankAppState.setUser(user);
             }
         }
         else {
