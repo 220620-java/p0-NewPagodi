@@ -10,11 +10,13 @@ class ViewAccountsMenuState extends BankAppState {
 
     private IState nextState;
     List<Account> accounts;
+    boolean returnVisit;
     
     ViewAccountsMenuState(IIO io) {
         super(io);
         nextState = new FinalState(getIO());
         accounts = null;
+        returnVisit = false;
     }
 
     @Override
@@ -29,6 +31,17 @@ class ViewAccountsMenuState extends BankAppState {
 
     @Override
     public String getMenu() {
+        // It's possible that we are returning to this state because of invalid
+        // input. The menu should only be displayed the first time and only the
+        // prompt should be displayed on subsequent visits.
+        
+        if ( returnVisit )
+        {
+            return "";
+        }
+        
+        returnVisit = true;
+        
         User user = BankAppState.getUser();
         StringBuilder builder = new StringBuilder();
         builder.append("===" + user.getUsername() + "'s bank accounts===\n");
@@ -70,12 +83,12 @@ class ViewAccountsMenuState extends BankAppState {
         if ( inputIsInt ) {
             // If the input is an integer, see if it is in the valid range.
             if ( 1 <= accountListNumber && accountListNumber <= accounts.size() ) {
-                getIO().send("You selected " + accountListNumber
+                getIO().sendLine("You selected " + accountListNumber
                         + ". Not Implemented yet.");
                 nextState = new AccountsMenuState(getIO());
             }
             else {
-                getIO().send("Invalid account choice, Please try again.");
+                getIO().sendLine("Invalid account choice, Please try again.");
                 nextState = this;
             }
         }
@@ -90,7 +103,7 @@ class ViewAccountsMenuState extends BankAppState {
                 nextState = new FinalState(getIO());
                 break;
             default:
-                getIO().send("Invalid input. Please try again.");
+                getIO().sendLine("Invalid input. Please try again.");
                 nextState = this;
                 break;
             }
