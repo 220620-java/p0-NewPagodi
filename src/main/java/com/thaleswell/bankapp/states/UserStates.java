@@ -1,5 +1,6 @@
 package com.thaleswell.bankapp.states;
 
+import com.thaleswell.bankapp.exceptions.UsernameAlreadyExistsException;
 import com.thaleswell.bankapp.models.User;
 import com.thaleswell.bankapp.services.data.IUserService;
 import com.thaleswell.tui.io.IIO;
@@ -36,22 +37,35 @@ class GetPasswordState extends BankAppState {
     @Override
     public void performStateTask() {
         IUserService userService = getDataServiceBundle().getUserService();
+        User user;
         if ( reason == UserReason.LOGIN ) {
-            User user = userService.logIn(username,password);
+            user = userService.logIn(username,password);
             
             if ( user == null ) {
                 getIO().sendLine("Invalid username or password");
             }
             else {
                 getIO().sendLine("Login Successful");
-                BankAppState.setUser(user);
             }
         }
         else {
-            
+            try {
+                user = userService.registerUser(username, password);
+                getIO().sendLine("Account created.");
+            }
+            catch ( UsernameAlreadyExistsException e ) {
+                getIO().sendLine("Username already exists.");
+                user = null;
+            }
         }
         
-        next = new StartState(getIO());
+        if ( user != null ) {
+            BankAppState.setUser(user);
+            next = new AccountsMenuState(getIO());
+        }
+        else {
+            next = new StartState(getIO());
+        }
     }
 
     @Override

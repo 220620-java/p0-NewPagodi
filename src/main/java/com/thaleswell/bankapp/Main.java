@@ -29,5 +29,8 @@ public class Main {
 
         // Once the loop is complete, close the scanner and exit the app.
         scanner.close();
+        
+        // Print a final message to the console.
+        consoleIO.sendLine("bye.");
     }
 }

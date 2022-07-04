@@ -50,10 +50,9 @@ public class StartState extends BankAppState {
             nextState = new GetUsernameState(getIO(),UserReason.LOGIN);
             break;
         case "2":
-            getIO().send("Not implemented.");
+            nextState = new GetUsernameState(getIO(),UserReason.CREATE_ACCOUNT);
             break;
         case "q":
-            getIO().send("bye.");
             nextState = new FinalState(getIO());
             break;
         default:
