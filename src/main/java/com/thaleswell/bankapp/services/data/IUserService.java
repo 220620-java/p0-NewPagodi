@@ -26,4 +26,13 @@ public interface IUserService {
      * no user with that username or the password does not match
      */
     public User logIn(String username, String password);
+    
+    /**
+     * Find a user for a given username. The password field will be empty.
+     * 
+     * @param username  the username of the desired user
+     * @return the user matching the username or null if there is no user with
+     * that username.
+     */
+    User findByUsername(String username);
 }

@@ -29,6 +29,11 @@ public class DummyUserService implements IUserService{
             
             return user;
         }
-
+    }
+    
+    @Override
+    public User findByUsername(String username) {
+        // TODO Auto-generated method stub
+        return null;
     }
 }
