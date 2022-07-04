@@ -78,6 +78,7 @@ class GetUsernameState extends BankAppState {
 
     private UserReason reason;
     private IState next;
+    private String username;
     
     GetUsernameState(IIO io, UserReason reason) {
         super(io);
@@ -91,7 +92,37 @@ class GetUsernameState extends BankAppState {
 
     @Override
     public void processInput(String input) {
-        next = new GetPasswordState(getIO(), reason, input);
+        username = input;
+    }
+    
+    @Override
+    public void performStateTask() {
+
+        User user = BankAppState.getDataServiceBundle().getUserService()
+                .findByUsername(username);
+
+        if ( reason == UserReason.CREATE_ACCOUNT ) {
+            // If we're creating an account, we want user to be null since
+            // that indicates there is no existing user with that name.
+            if ( user == null ) {
+                next = new GetPasswordState(getIO(), reason, username);
+            }
+            else {
+                getIO().sendLine("Sorry, that username is taken.");
+                next = new StartState(getIO());
+            }
+        }
+        else {
+            // On the other hand, if we're trying to login and user is null,
+            // then there is no user with that name.
+            if ( user == null ) {
+                getIO().sendLine("Invalid username.");
+                next = new StartState(getIO());
+            }
+            else {
+                next = new GetPasswordState(getIO(), reason, username);
+            }
+        }
     }
 
     @Override
