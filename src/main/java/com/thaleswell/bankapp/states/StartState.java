@@ -18,6 +18,11 @@ class FinalState extends BankAppState {
     public IState getNext() {
         return this;
     }
+    
+    @Override
+    public void teardown() {
+        getIO().sendLine("bye.");
+    }
 }
 
 public class StartState extends BankAppState {

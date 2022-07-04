@@ -14,4 +14,6 @@ public interface IState {
     public void performStateTask();
     
     public IState getNext();
+    
+    public void teardown();
 }

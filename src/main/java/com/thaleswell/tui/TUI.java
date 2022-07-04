@@ -24,8 +24,13 @@ public class TUI {
 
             state.processInput(input);
             state.performStateTask();
+            state.teardown();
             state = state.getNext();
         }
+
+        // The exit state never actually ran, so call it's teardown method to
+        // perform any final cleanup.
+        state.teardown();
     }
     
     protected IIO getIO() {
