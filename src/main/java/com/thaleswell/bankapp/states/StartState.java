@@ -34,7 +34,7 @@ public class StartState extends BankAppState {
             "\n" +
             "===Main Menu===\n" +
             "\n" +
-            "1) Login\n" +
+            "1) Login.\n" +
             "2) Create a new account.\n" +
             "q) Exit the system.\n" +
             "\n";
