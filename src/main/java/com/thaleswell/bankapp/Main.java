@@ -1,13 +1,12 @@
 package com.thaleswell.bankapp;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Scanner;
 
+import com.thaleswell.bankapp.data.UserPostgres;
+import com.thaleswell.bankapp.models.User;
 import com.thaleswell.bankapp.services.banking.DummyBankService;
 import com.thaleswell.bankapp.states.BankAppState;
 import com.thaleswell.bankapp.states.StartState;
-import com.thaleswell.bankapp.utils.ConnectionUtil;
 import com.thaleswell.tui.TUI;
 import com.thaleswell.tui.io.ConsoleIO;
 import com.thaleswell.tui.io.IIO;
