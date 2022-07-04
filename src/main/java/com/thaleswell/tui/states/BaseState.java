@@ -13,6 +13,10 @@ abstract public class BaseState implements IState{
     public boolean isExitState() {
         return false;
     }
+    
+    @Override
+    public void prepare() {
+    }
 
     @Override
     public String getMenu() {

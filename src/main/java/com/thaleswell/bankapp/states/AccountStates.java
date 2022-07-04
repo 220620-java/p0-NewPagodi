@@ -12,7 +12,11 @@ class ViewAccountsMenuState extends BankAppState {
         super(io);
         nextState = new FinalState(getIO());
     }
-    
+
+    @Override
+    public void prepare() {
+    }
+
     @Override
     public String getMenu() {
         // TODO Auto-generated method stub

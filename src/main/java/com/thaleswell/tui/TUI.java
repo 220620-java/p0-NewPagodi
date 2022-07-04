@@ -17,6 +17,7 @@ public class TUI {
         String input;
 
         while ( !state.isExitState() ) {
+            state.prepare();
             io.send(state.getMenu());
             io.send(state.getPrompt());
             input = io.read();
