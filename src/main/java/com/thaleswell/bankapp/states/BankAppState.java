@@ -13,7 +13,6 @@ abstract public class BankAppState  extends BaseState{
 
     public BankAppState(IIO io) {
         super(io);
-        user = null;
     }
     
     public static IBankService getBankService() {
