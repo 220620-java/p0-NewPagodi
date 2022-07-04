@@ -2,8 +2,9 @@ package com.thaleswell.bankapp;
 
 import java.util.Scanner;
 
-import com.thaleswell.bankapp.data.UserPostgres;
-import com.thaleswell.bankapp.models.User;
+import com.thaleswell.bankapp.data.AccountPostgres;
+import com.thaleswell.bankapp.ds.List;
+import com.thaleswell.bankapp.models.Account;
 import com.thaleswell.bankapp.services.banking.DummyBankService;
 import com.thaleswell.bankapp.states.BankAppState;
 import com.thaleswell.bankapp.states.StartState;

@@ -3,35 +3,24 @@ package com.thaleswell.bankapp.models;
 public class Account {
     private int id;
     private String type;
-    private String username;
+    private int userId;
     
-    public Account(int id, String type, String username) {
+    public Account(int id, String type, int userId) {
         this.id = id;
         this.type = type;
-        this.username = username;
+        this.userId = userId;
     }
     
     public int getId() {
         return id;
     }
-    
-    public void setId(int id) {
-        this.id = id;
-    }
-    
+
     public String getType() {
         return type;
     }
-    
-    public void setType(String type) {
-        this.type = type;
+
+    public int getUserId() {
+        return userId;
     }
-    public String getUsername() {
-        return username;
-    }
-    
-    public void setUsername(String username) {
-        this.username = username;
-    }
-    
+
 }
