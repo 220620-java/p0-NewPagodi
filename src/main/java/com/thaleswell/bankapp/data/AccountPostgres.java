@@ -19,9 +19,61 @@ public class AccountPostgres implements AccountDAO{
     }
 
     @Override
-    public Account create(Account t) {
-        // TODO Auto-generated method stub
-        return null;
+    public Account create(Account account) {
+        // We need to do 3 things:
+        // 1) get the type id for account.type.
+        // 2) add an entry to the account table.
+        // 3) add an entry to the account_user table.
+        
+        // 1) get the type id for account.type.
+        int typeId = getAccountTypeId(account.getType());
+        Account completeAccount = null;
+        
+        try (Connection conn = connUtil.getConnection()) {
+            int accountId;
+            conn.setAutoCommit(false);
+            
+            // 2) add an entry to the account table.
+            String sql = "insert into "+
+                         "account(account_id,type_id) "+
+                         "values "+
+                         "(default ,?);";
+            String[] keys = {"account_id"};
+            
+            PreparedStatement stmt = conn.prepareStatement(sql, keys);
+            stmt.setInt(1, typeId);
+
+            int rowsAffected = stmt.executeUpdate();
+            ResultSet resultSet = stmt.getGeneratedKeys();
+            if (resultSet.next() && rowsAffected==1) {
+                accountId = resultSet.getInt("account_id");
+                completeAccount = new Account(accountId,
+                                              account.getType(),
+                                              account.getUserId());
+            } else {
+                conn.rollback();
+                return null;
+            }
+            
+            // 3) add an entry to the account_user table.
+            sql = "insert into\r\n"
+                + "account_user(account_id, user_id)\r\n"
+                + "values\r\n"
+                + "(?,?);";
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, accountId);
+            stmt.setInt(2, account.getUserId());
+            
+            rowsAffected = stmt.executeUpdate();
+            if ( rowsAffected !=1 ) {
+                conn.rollback();
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return completeAccount;
     }
 
     @Override
@@ -86,4 +138,32 @@ public class AccountPostgres implements AccountDAO{
 
         return accounts;
     }
+    
+    @Override
+    public int getAccountTypeId(String type) {
+        int typeId = -1;
+        
+        try (Connection conn = connUtil.getConnection()) {
+            String sql = "select type_id from account_type "
+                       + "where description=?;";
+
+            // set up that statement with the database
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, type);
+
+            // execute the statement
+            ResultSet resultSet = stmt.executeQuery();
+
+            // process the result set
+            if (resultSet.next()) {
+                typeId = resultSet.getInt("type_id");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return typeId;
+    }
+    
 }
