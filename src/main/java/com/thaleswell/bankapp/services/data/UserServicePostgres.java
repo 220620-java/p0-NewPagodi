@@ -14,8 +14,17 @@ public class UserServicePostgres implements IUserService {
 
     @Override
     public User registerUser(String username, String password) throws UsernameAlreadyExistsException {
-        // TODO Auto-generated method stub
-        return null;
+        User user = userDao.findByUsername(username);
+
+        if (user != null) {
+            throw new UsernameAlreadyExistsException();
+        }
+        else {
+            user = new User(username, password);
+            user = userDao.create(user);
+        }
+        
+        return user;
     }
 
     @Override
@@ -26,12 +35,7 @@ public class UserServicePostgres implements IUserService {
 
     @Override
     public User findByUsername(String username) {
-        User user = userDao.findByUsername(username);
-
-        if (user != null) {
-            user.setPassword("");
-        }
-        return user;
+        return userDao.findByUsername(username);
     }
 
 }
