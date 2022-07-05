@@ -13,5 +13,4 @@ class IUserServiceTest {
         System.out.println("======TEST ONE EXECUTED=======");
         Assertions.assertTrue(true);
     }
-
 }
