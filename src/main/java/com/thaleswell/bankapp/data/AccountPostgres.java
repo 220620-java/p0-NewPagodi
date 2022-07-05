@@ -80,30 +80,6 @@ public class AccountPostgres implements AccountDAO{
     }
 
     @Override
-    public Account findById(int id) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public List<Account> findAll() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public void update(Account t) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void delete(Account t) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
     public List<Account> findAllByUserId(int userId) {
         List<Account> accounts = new ArrayList<>();
 
