@@ -65,11 +65,16 @@ class DepositState extends BankAppState {
         super(io);
         this.account = account;
         nextState = this;
-        balance = BankAppState.getDataServiceBundle()
-                              .getAccountService()
-                              .getAccountBalance(account);
-        deposit = -1;
+        balance = -1.0;
+        deposit = -1.0;
         processDeposit = false;
+    }
+    
+    @Override
+    public void prepare() {
+        balance = BankAppState.getDataServiceBundle()
+                .getAccountService()
+                .getAccountBalance(account);
     }
     
     @Override
