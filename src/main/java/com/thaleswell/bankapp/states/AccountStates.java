@@ -130,6 +130,7 @@ class AccountInfoState extends BankAppState {
         "\n" +
         "1) Make a deposit.\n" +
         "2) Make a withdrawal.\n" +
+        "3) View transaction history.\n" +
         "\n" +
         "r) Return to the accounts menu.\n" +
         "q) Exit the system.\n" +
@@ -145,6 +146,9 @@ class AccountInfoState extends BankAppState {
             break;
         case "2":
             nextState = new WithdrawState(getIO(), account);
+            break;
+        case "3":
+            nextState = new TransactionHistory(getIO(), account);
             break;
         case "r":
             nextState = new AccountsMenuState(getIO());

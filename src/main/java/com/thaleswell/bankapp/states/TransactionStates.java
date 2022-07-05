@@ -2,11 +2,75 @@ package com.thaleswell.bankapp.states;
 
 import java.util.Date;
 
+import com.thaleswell.bankapp.ds.List;
 import com.thaleswell.bankapp.exceptions.TransactionOverdraftException;
 import com.thaleswell.bankapp.models.Account;
 import com.thaleswell.bankapp.models.Transaction;
 import com.thaleswell.tui.io.IIO;
 import com.thaleswell.tui.states.IState;
+
+class TransactionHistory  extends BankAppState {
+    private Account account;
+    private String menu;
+
+    TransactionHistory(IIO io, Account account) {
+        super(io);
+
+        this.account = account;
+    }
+
+    @Override
+    public void prepare() {
+        List<Transaction> transactions =
+                BankAppState.getDataServiceBundle()
+                            .getTransactionService()
+                            .findAllByAccountId(account.getId());
+        
+        StringBuilder builder = new StringBuilder();
+        builder.append("===Transaction history for account " + account.getId() 
+                      + "===\n");
+        
+        
+        if ( transactions.size() == 0 ) {
+            builder.append("\nThere are currently no transactions " + 
+                           "for this account.\n");
+        }
+        else {
+            for ( int i = 0 ; i < transactions.size(); ++i )
+            {
+                Transaction transaction = transactions.get(i);
+                builder.append("id:");
+                builder.append(transaction.getId());
+                builder.append("  date:");
+                builder.append(transaction.getDatetime());
+                builder.append("  amount:");
+                builder.append(transaction.getAmount());
+                builder.append("  balance:");
+                builder.append(transaction.getBalance());
+                builder.append("\n");
+            }
+            builder.append("\n");
+        }
+
+        menu = builder.toString();
+    }
+
+    @Override
+    public String getMenu() {
+        return menu;
+    }
+
+    @Override
+    public String getPrompt() {
+        return "Press enter to continue: ";
+    }
+
+    @Override
+    public IState getNext() {
+        // TODO Auto-generated method stub
+        return new AccountInfoState(getIO(), account);
+    }
+}
 
 class TransactionInfoState extends BankAppState {
 
