@@ -106,11 +106,17 @@ class AccountInfoState extends BankAppState {
     
     Account account;
     IState nextState;
+    double balance;
     
     public AccountInfoState(IIO io, Account account) {
         super(io);
         this.account = account;
         nextState = this;
+        balance = BankAppState.getDataServiceBundle()
+                              .getAccountService()
+                              .getAccountBalance(account);
+        
+        
     }
 
     @Override
@@ -120,10 +126,10 @@ class AccountInfoState extends BankAppState {
         "\n" +
         "Account number: " + account.getId() + "\n" +
         "Account type: " + account.getType() + "\n" +
+        "Account balance: " + balance + "\n" +
         "\n" +
-        "1) Get balance.\n" +
-        "2) Make a deposit.\n" +
-        "3) Make a withdrawal.\n" +
+        "1) Make a deposit.\n" +
+        "2) Make a withdrawal.\n" +
         "\n" +
         "r) Return to the accounts menu.\n" +
         "q) Exit the system.\n" +
@@ -141,18 +147,15 @@ class AccountInfoState extends BankAppState {
         case "2":
             getIO().sendLine("Not implemented.");
             break;
-        case "3":
-            getIO().sendLine("Not implemented.");
-            break;
         case "r":
-            getIO().sendLine("Not implemented.");
+            nextState = new AccountsMenuState(getIO());
             break;
         case "q":
-            getIO().sendLine("Not implemented.");
+            nextState = new FinalState(getIO());
             break;
         default:
-            getIO().sendLine("Not implemented.");
-            break;
+            getIO().sendLine("Invalid input. Please try again.");
+            nextState = this;
         }
     }
 
