@@ -102,6 +102,66 @@ class CreateBankAccountState extends BankAppState {
     }
 }
 
+class AccountInfoState extends BankAppState {
+    
+    Account account;
+    IState nextState;
+    
+    public AccountInfoState(IIO io, Account account) {
+        super(io);
+        this.account = account;
+        nextState = this;
+    }
+
+    @Override
+    public String getMenu() {
+        return "\n" +
+        "===Account Information===" +
+        "\n" +
+        "Account number: " + account.getId() + "\n" +
+        "Account type: " + account.getType() + "\n" +
+        "\n" +
+        "1) Get balance.\n" +
+        "2) Make a deposit.\n" +
+        "3) Make a withdrawal.\n" +
+        "\n" +
+        "r) Return to the accounts menu.\n" +
+        "q) Exit the system.\n" +
+        "\n";
+    }
+
+    @Override
+    public void processInput(String input) {
+        switch (input) {
+
+        case "1":
+            getIO().sendLine("Not implemented.");
+            nextState = this;
+            break;
+        case "2":
+            getIO().sendLine("Not implemented.");
+            break;
+        case "3":
+            getIO().sendLine("Not implemented.");
+            break;
+        case "r":
+            getIO().sendLine("Not implemented.");
+            break;
+        case "q":
+            getIO().sendLine("Not implemented.");
+            break;
+        default:
+            getIO().sendLine("Not implemented.");
+            break;
+        }
+    }
+
+    @Override
+    public IState getNext() {
+        return nextState;
+    }
+}
+
 class ViewAccountsMenuState extends BankAppState {
 
     private IState nextState;
@@ -179,9 +239,8 @@ class ViewAccountsMenuState extends BankAppState {
         if ( inputIsInt ) {
             // If the input is an integer, see if it is in the valid range.
             if ( 1 <= accountListNumber && accountListNumber <= accounts.size() ) {
-                getIO().sendLine("You selected " + accountListNumber
-                        + ". Not Implemented yet.");
-                nextState = new AccountsMenuState(getIO());
+                int i = accountListNumber - 1;
+                nextState = new AccountInfoState(getIO(), accounts.get(i));
             }
             else {
                 getIO().sendLine("Invalid account choice, Please try again.");
