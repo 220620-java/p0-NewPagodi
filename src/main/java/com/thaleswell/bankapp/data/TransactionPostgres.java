@@ -32,7 +32,7 @@ public class TransactionPostgres implements TransactionDAO {
             
             PreparedStatement stmt = conn.prepareStatement(sql, keys);
             stmt.setInt(1, transaction.getAccountId());
-            stmt.setDate(2, SQLDate(transaction.getDatetime()));
+            stmt.setTimestamp(2, Timestamp(transaction.getDatetime()));
             stmt.setDouble(3, transaction.getAmount());
             
             int rowsAffected = stmt.executeUpdate();
@@ -80,7 +80,7 @@ public class TransactionPostgres implements TransactionDAO {
         
     }
     
-    private java.sql.Date SQLDate(java.util.Date date) {
-        return new java.sql.Date(date.getTime());
+    private java.sql.Timestamp Timestamp(java.util.Date date) {
+        return new java.sql.Timestamp(date.getTime());
     }
 }
