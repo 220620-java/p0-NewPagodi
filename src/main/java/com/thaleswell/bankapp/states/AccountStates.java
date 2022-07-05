@@ -141,8 +141,7 @@ class AccountInfoState extends BankAppState {
         switch (input) {
 
         case "1":
-            getIO().sendLine("Not implemented.");
-            nextState = this;
+            nextState = new DepositState(getIO(), account);
             break;
         case "2":
             getIO().sendLine("Not implemented.");
