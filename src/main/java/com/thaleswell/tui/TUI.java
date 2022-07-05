@@ -33,7 +33,7 @@ public class TUI {
         state.teardown();
     }
     
-    protected IIO getIO() {
-        return io;
-    }
+//    protected IIO getIO() {
+//        return io;
+//    }
 }
