@@ -83,4 +83,10 @@ public class TransactionPostgres implements TransactionDAO {
     private java.sql.Timestamp Timestamp(java.util.Date date) {
         return new java.sql.Timestamp(date.getTime());
     }
+
+    @Override
+    public List<Transaction> findAllByAccountId(int accountId) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

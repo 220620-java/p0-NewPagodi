@@ -7,6 +7,7 @@ public class Transaction {
     private int accountId;
     private Date datetime;
     private double amount;
+    private double balance;
     
     public Transaction(int id, int accountId, Date datetime, double amount) {
         this.id = id;
@@ -45,5 +46,13 @@ public class Transaction {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+    
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 }

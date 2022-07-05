@@ -6,6 +6,7 @@ import com.thaleswell.bankapp.data.AccountDAO;
 import com.thaleswell.bankapp.data.AccountPostgres;
 import com.thaleswell.bankapp.data.TransactionDAO;
 import com.thaleswell.bankapp.data.TransactionPostgres;
+import com.thaleswell.bankapp.ds.List;
 import com.thaleswell.bankapp.exceptions.TransactionOverdraftException;
 import com.thaleswell.bankapp.models.Account;
 import com.thaleswell.bankapp.models.Transaction;
@@ -55,4 +56,11 @@ public class TransactionServicePostgres implements ITransactionService{
             }
         }
     }
+
+    @Override
+    public List<Transaction> findAllByAccountId(int accountId) {
+        return transactionDAO.findAllByAccountId(accountId);
+    }
+    
+    
 }
