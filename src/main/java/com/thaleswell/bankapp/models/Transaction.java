@@ -20,34 +20,18 @@ public class Transaction {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public int getAccountId() {
         return accountId;
     }
-
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
-    }
-
+    
     public Date getDatetime() {
         return datetime;
-    }
-
-    public void setDatetime(Date datetime) {
-        this.datetime = datetime;
     }
 
     public double getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-    
     public double getBalance() {
         return balance;
     }
