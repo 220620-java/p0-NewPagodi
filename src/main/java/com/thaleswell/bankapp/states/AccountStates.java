@@ -144,7 +144,7 @@ class AccountInfoState extends BankAppState {
             nextState = new DepositState(getIO(), account);
             break;
         case "2":
-            getIO().sendLine("Not implemented.");
+            nextState = new WithdrawState(getIO(), account);
             break;
         case "r":
             nextState = new AccountsMenuState(getIO());
