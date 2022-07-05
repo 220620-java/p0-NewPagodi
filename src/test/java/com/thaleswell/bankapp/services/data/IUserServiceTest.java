@@ -1,9 +1,9 @@
 package com.thaleswell.bankapp.services.data;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.thaleswell.bankapp.data.UserDAO;
-import com.thaleswell.bankapp.data.UserPostgres;
 import com.thaleswell.bankapp.exceptions.UsernameAlreadyExistsException;
 import com.thaleswell.bankapp.models.User;
 
@@ -63,5 +62,36 @@ class IUserServiceTest {
         assertThrows(UsernameAlreadyExistsException.class, () -> {
             userServ.registerUser("username","password");
         });
+    }
+    
+    @Test
+    public void loginSucess() {
+        User mockUser = new User("username","password");
+        Mockito.when(userDao.findByUsername("username")).thenReturn(mockUser);
+        
+        User returnedUser = userServ.logIn("username","password");
+
+        // The DAO should report a good user for this username and password:
+        assertNotNull(returnedUser);
+    }
+    
+    @Test
+    public void loginFailNoUser() {
+        Mockito.when(userDao.findByUsername("username")).thenReturn(null);
+        User returnedUser = userServ.logIn("username","password");
+
+        // The DAO should find no user for this username and return null.
+        assertNull(returnedUser);
+    }
+    
+    @Test
+    public void loginFailWrongPassword() {
+        User mockUser = new User("username","password");
+        Mockito.when(userDao.findByUsername("username")).thenReturn(mockUser);
+
+        User returnedUser = userServ.logIn("username","wrong");
+
+        // The password from the DAO will not match the given password:
+        assertNull(returnedUser);
     }
 }
