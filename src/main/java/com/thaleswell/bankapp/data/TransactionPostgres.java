@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.thaleswell.bankapp.ds.ArrayList;
 import com.thaleswell.bankapp.ds.List;
+import com.thaleswell.bankapp.models.Account;
 import com.thaleswell.bankapp.models.Transaction;
 import com.thaleswell.bankapp.utils.ConnectionUtil;
 
@@ -83,10 +85,58 @@ public class TransactionPostgres implements TransactionDAO {
     private java.sql.Timestamp Timestamp(java.util.Date date) {
         return new java.sql.Timestamp(date.getTime());
     }
+    
+    private java.util.Date Timestamp2Date(java.sql.Timestamp timestamp ) {
+        return new java.util.Date(timestamp.getTime());
+    }
 
     @Override
     public List<Transaction> findAllByAccountId(int accountId) {
-        // TODO Auto-generated method stub
-        return null;
+        List<Transaction> transactions = new ArrayList<>();
+
+        try (Connection conn = connUtil.getConnection()) {
+            String sql = "select\r\n"
+                    + "    transaction_id,\r\n"
+                    + "    transaction_datetime,\r\n"
+                    + "    amount, \r\n"
+                    + "    sum(amount) over (order by transaction_datetime) as balance\r\n"
+                    + "from\r\n"
+                    + "    account_transaction\r\n"
+                    + "where\r\n"
+                    + "    account_id = ?\r\n"
+                    + "order by\r\n"
+                    + "    transaction_datetime;\r\n"
+                    + "";
+
+            // set up that statement with the database
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, accountId);
+
+            // execute the statement
+            ResultSet resultSet = stmt.executeQuery();
+
+            // process the result set
+            while (resultSet.next()) {
+                int transactionId = resultSet.getInt("transaction_id");
+                java.sql.Timestamp timestamp =
+                        resultSet.getTimestamp("transaction_datetime");
+                double amount = resultSet.getDouble("amount");
+                double balance = resultSet.getDouble("balance");
+                
+                Transaction transaction =
+                        new Transaction(transactionId,
+                                        accountId, 
+                                        Timestamp2Date(timestamp),
+                                        amount);
+                transaction.setBalance(balance);
+
+                transactions.add(transaction);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return transactions;
     }
 }
