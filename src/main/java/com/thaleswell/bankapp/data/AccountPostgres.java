@@ -168,5 +168,36 @@ public class AccountPostgres implements AccountDAO{
         
         return typeId;
     }
-    
+
+    @Override
+    public double getAccountBalance(Account account) {
+        double balance = 0;
+        
+        try (Connection conn = connUtil.getConnection()) {
+            String sql = "select\r\n"
+                    + "    sum(amount) as balance\r\n"
+                    + "from \r\n"
+                    + "    account_transaction\r\n"
+                    + "where \r\n"
+                    + "    account_id = ?;";
+
+            // set up that statement with the database
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, account.getId());
+
+            // execute the statement
+            ResultSet resultSet = stmt.executeQuery();
+
+            // process the result set
+            if (resultSet.next()) {
+                balance = resultSet.getDouble("balance");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return balance;
+    }
+
 }

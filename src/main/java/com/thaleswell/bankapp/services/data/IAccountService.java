@@ -8,7 +8,8 @@ import com.thaleswell.bankapp.models.User;
 public interface IAccountService {
     
     List<Account> findUserBankAccounts(int userId);
-    
 
     Account createBankAccount(User user, String type) throws UnknownAccountTypeException;
+    
+    double getAccountBalance(Account account);
 }

@@ -15,4 +15,6 @@ public interface AccountDAO extends DataAccessObject<Account>{
      *         no corresponding type.
      */
     public int getAccountTypeId(String type);
+    
+    public double getAccountBalance(Account account);
 }
