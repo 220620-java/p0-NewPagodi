@@ -69,6 +69,9 @@ public class AccountPostgres implements AccountDAO{
                 conn.rollback();
                 return null;
             }
+            else {
+                conn.commit();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
