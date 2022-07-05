@@ -29,8 +29,16 @@ public class UserServicePostgres implements IUserService {
 
     @Override
     public User logIn(String username, String password) {
-        // TODO Auto-generated method stub
-        return null;
+        // Find the user by name.
+        User user = findByUsername(username);
+        
+        // If the user is not null verify that passwords match.
+        if ( user != null) {
+            if ( !user.getPassword().equals(password) ) {
+                user = null;
+            }
+        }
+        return user;
     }
 
     @Override

@@ -82,9 +82,11 @@ class GetPasswordState extends BankAppState {
         IUserService userService = getDataServiceBundle().getUserService();
 
         if ( reason == UserReason.LOGIN ) {
-            // If we're trying to login, verify that the given password matches
-            // the user's password.
-            if ( enteredPassword.equals(user.getPassword()) ) {
+            // If we're trying to login, call the login service.
+            user = BankAppState.getDataServiceBundle()
+                               .getUserService()
+                               .logIn(user.getUsername(), user.getPassword());
+            if ( user != null ) {
                 getIO().sendLine("Login Successful");
                 next = new AccountsMenuState(getIO());
                 BankAppState.setUser(user);
