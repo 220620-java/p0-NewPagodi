@@ -1,5 +1,10 @@
 package com.thaleswell.bankapp.data;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import com.thaleswell.bankapp.ds.List;
 import com.thaleswell.bankapp.models.Transaction;
 import com.thaleswell.bankapp.utils.ConnectionUtil;
@@ -13,9 +18,42 @@ public class TransactionPostgres implements TransactionDAO {
     }
 
     @Override
-    public Transaction create(Transaction t) {
-        // TODO Auto-generated method stub
-        return null;
+    public Transaction create(Transaction transaction) {
+        Transaction report = null;
+        
+        try (Connection conn = connUtil.getConnection()) {
+            conn.setAutoCommit(false);
+            
+            String sql = "insert into account_transaction\r\n"
+                    + "(transaction_id, account_id, transaction_datetime, amount)\r\n"
+                    + "values\r\n"
+                    + "(default, ?, ?, ?);";
+            String[] keys = {"transaction_id"};
+            
+            PreparedStatement stmt = conn.prepareStatement(sql, keys);
+            stmt.setInt(1, transaction.getAccountId());
+            stmt.setDate(2, SQLDate(transaction.getDatetime()));
+            stmt.setDouble(3, transaction.getAmount());
+            
+            int rowsAffected = stmt.executeUpdate();
+            ResultSet resultSet = stmt.getGeneratedKeys();
+            
+            if (resultSet.next() && rowsAffected==1) {
+                report = new Transaction(resultSet.getInt("transaction_id"),
+                                         transaction.getAccountId(),
+                                         transaction.getDatetime(),
+                                         transaction.getAmount());
+                conn.commit();
+            } else {
+                conn.rollback();
+                return null;
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return report;
     }
 
     @Override
@@ -40,5 +78,9 @@ public class TransactionPostgres implements TransactionDAO {
     public void delete(Transaction t) {
         // TODO Auto-generated method stub
         
+    }
+    
+    private java.sql.Date SQLDate(java.util.Date date) {
+        return new java.sql.Date(date.getTime());
     }
 }
