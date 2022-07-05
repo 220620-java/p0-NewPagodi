@@ -1,5 +1,7 @@
 package com.thaleswell.bankapp.states;
 
+import java.text.DecimalFormat;
+
 import com.thaleswell.bankapp.ds.List;
 import com.thaleswell.bankapp.exceptions.UnknownAccountTypeException;
 import com.thaleswell.bankapp.models.Account;
@@ -121,12 +123,13 @@ class AccountInfoState extends BankAppState {
 
     @Override
     public String getMenu() {
+        
         return "\n" +
         "===Account Information===" +
         "\n" +
         "Account number: " + account.getId() + "\n" +
         "Account type: " + account.getType() + "\n" +
-        "Account balance: " + balance + "\n" +
+        "Account balance: $" + To2DecimalPlaces(balance) + "\n" +
         "\n" +
         "1) Make a deposit.\n" +
         "2) Make a withdrawal.\n" +

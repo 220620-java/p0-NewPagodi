@@ -1,5 +1,7 @@
 package com.thaleswell.bankapp.states;
 
+import java.text.DecimalFormat;
+
 import com.thaleswell.bankapp.DataServiceBundle;
 import com.thaleswell.bankapp.models.User;
 import com.thaleswell.bankapp.services.banking.IBankService;
@@ -37,5 +39,10 @@ abstract public class BankAppState  extends BaseState{
 
     public static void setUser(User user) {
         BankAppState.user = user;
+    }
+    
+    protected String To2DecimalPlaces(double n) {
+        DecimalFormat df = new DecimalFormat("#.00");
+        return df.format(n);
     }
 }
