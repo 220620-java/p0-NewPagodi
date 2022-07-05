@@ -41,7 +41,7 @@ abstract public class BankAppState  extends BaseState{
         BankAppState.user = user;
     }
     
-    protected String To2DecimalPlaces(double n) {
+    protected String to2DecimalPlaces(double n) {
         DecimalFormat df = new DecimalFormat("#.00");
         return df.format(n);
     }

@@ -44,9 +44,9 @@ class TransactionHistory  extends BankAppState {
                 builder.append("  date:");
                 builder.append(transaction.getDatetime());
                 builder.append("  amount:");
-                builder.append(transaction.getAmount());
+                builder.append(to2DecimalPlaces(transaction.getAmount()));
                 builder.append("  balance:");
-                builder.append(transaction.getBalance());
+                builder.append(to2DecimalPlaces(transaction.getBalance()));
                 builder.append("\n");
             }
             builder.append("\n");
@@ -98,9 +98,9 @@ class TransactionInfoState extends BankAppState {
                 "Account type: " + account.getType() + "\n" + 
                 "\n" + 
                 "Transaction id: " + transaction.getId() + "\n"+ 
-                "Transaction amount: " + transaction.getAmount() + "\n" + 
+                "Transaction amount: $" + transaction.getAmount() + "\n" + 
                 "\n" + 
-                "New balance: " + newBalance + "\n" + "\n";
+                "New balance: $" + to2DecimalPlaces(newBalance) + "\n" + "\n";
     }
 
     @Override
