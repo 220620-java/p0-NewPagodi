@@ -1,7 +1,13 @@
 package com.thaleswell.bankapp.data;
 
 import com.thaleswell.bankapp.ds.List;
-
+/**
+ * The base interface from which all other application DAO (data access objects)
+ * derive.
+ * 
+ * @author michael
+ * @param <T> the data type for the DAO.
+ */
 public interface DataAccessObject<T> {
     /**
      * Saves the specified object as a new object in 
