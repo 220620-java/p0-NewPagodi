@@ -19,6 +19,20 @@ class TransactionHistory  extends BankAppState {
         this.account = account;
     }
 
+    private String padTo(String s,int len) {
+        int slen = s.length();
+        
+        StringBuilder b = new StringBuilder();
+        
+        for ( int i = 0 ; i < len-slen ; ++i ) {
+            b.append(' ');
+        }
+        
+        b.append(s);
+        
+        return b.toString();
+    }
+    
     @Override
     public void prepare() {
         List<Transaction> transactions =
@@ -36,18 +50,30 @@ class TransactionHistory  extends BankAppState {
                            "for this account.\n");
         }
         else {
+            builder.append("  Id                Date                Amount     Balance\n");
+            builder.append("------  ----------------------------  ----------  ----------\n");
+            
             for ( int i = 0 ; i < transactions.size(); ++i )
             {
                 Transaction transaction = transactions.get(i);
-                builder.append("id:");
-                builder.append(transaction.getId());
-                builder.append("  date:");
+                builder.append(padTo(String.valueOf(transaction.getId()),6));
+                builder.append("  ");
                 builder.append(transaction.getDatetime());
-                builder.append("  amount:");
-                builder.append(to2DecimalPlaces(transaction.getAmount()));
-                builder.append("  balance:");
-                builder.append(to2DecimalPlaces(transaction.getBalance()));
+                builder.append("  ");
+                String amountStr = to2DecimalPlaces(transaction.getAmount());
+                builder.append(padTo(amountStr,10));
+                builder.append("  ");
+                String balanceStr = to2DecimalPlaces(transaction.getBalance());
+                builder.append(padTo(balanceStr,10));
                 builder.append("\n");
+//                builder.append("id:");
+//                builder.append(transaction.getId());
+//                builder.append("  date:");
+//                builder.append(transaction.getDatetime());
+//                builder.append("  amount:");
+//                builder.append(to2DecimalPlaces(transaction.getAmount()));
+//                builder.append("  balance:");
+//                builder.append(to2DecimalPlaces(transaction.getBalance()));
             }
             builder.append("\n");
         }
