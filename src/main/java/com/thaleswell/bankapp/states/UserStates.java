@@ -114,10 +114,12 @@ class GetUsernameState extends BankAppState {
     private UserReason reason;
     private IState next;
     private String username;
+    private boolean userNameIsValid;
     
     GetUsernameState(IIO io, UserReason reason) {
         super(io);
         this.reason = reason;
+        userNameIsValid = false;
     }
     
     @Override
@@ -128,34 +130,53 @@ class GetUsernameState extends BankAppState {
     @Override
     public void processInput(String input) {
         username = input;
+        
+        int len = username.length();
+        
+        if ( len == 0 ) {
+            getIO().sendLine("Empty username. Please try again.");
+            next = this;
+        }
+        else if (len > 30 ){
+            // The database can only hold 30 chars for a username, so this
+            // string is unacceptable.
+            getIO().sendLine("Username too long. Please enter a name with "+
+                             "less than 30 characters.");
+            next = this;
+        }
+        else {
+            userNameIsValid = true;
+        }
     }
     
     @Override
     public void performStateTask() {
-        IUserService userService = getDataServiceBundle().getUserService();
-        User user = userService.findByUsername(username);
-
-        if ( reason == UserReason.CREATE_ACCOUNT ) {
-            // If we're creating an account, we want user to be null since
-            // that indicates there is no existing user with that name.
-            if ( user == null ) {
-                user = new User(username, "");
-                next = new GetPasswordState(getIO(), reason, user);
+        if ( userNameIsValid ) {
+            IUserService userService = getDataServiceBundle().getUserService();
+            User user = userService.findByUsername(username);
+    
+            if ( reason == UserReason.CREATE_ACCOUNT ) {
+                // If we're creating an account, we want user to be null since
+                // that indicates there is no existing user with that name.
+                if ( user == null ) {
+                    user = new User(username, "");
+                    next = new GetPasswordState(getIO(), reason, user);
+                }
+                else {
+                    getIO().sendLine("Sorry, that username is taken.");
+                    next = new StartState(getIO());
+                }
             }
             else {
-                getIO().sendLine("Sorry, that username is taken.");
-                next = new StartState(getIO());
-            }
-        }
-        else {
-            // On the other hand, if we're trying to login and user is null,
-            // then there is no user with that name.
-            if ( user == null ) {
-                getIO().sendLine("Invalid username.");
-                next = new StartState(getIO());
-            }
-            else {
-                next = new GetPasswordState(getIO(), reason, user);
+                // On the other hand, if we're trying to login and user is null,
+                // then there is no user with that name.
+                if ( user == null ) {
+                    getIO().sendLine("Invalid username.");
+                    next = new StartState(getIO());
+                }
+                else {
+                    next = new GetPasswordState(getIO(), reason, user);
+                }
             }
         }
     }
