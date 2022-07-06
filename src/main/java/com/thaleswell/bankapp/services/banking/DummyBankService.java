@@ -1,5 +1,7 @@
 package com.thaleswell.bankapp.services.banking;
 
+import java.text.DecimalFormat;
+
 import com.thaleswell.tui.io.IIO;
 
 public class DummyBankService implements IBankService{
@@ -13,7 +15,10 @@ public class DummyBankService implements IBankService{
     
     @Override
     public void dispenseCash(double withdrawal) {
-        io.sendLine("Dispensing " + withdrawal + ".");
+        DecimalFormat df = new DecimalFormat("#.00");
+        String withdrawalStr =  df.format(withdrawal);
+        
+        io.sendLine("Dispensing $" + withdrawalStr + ".");
     }
 
     @Override

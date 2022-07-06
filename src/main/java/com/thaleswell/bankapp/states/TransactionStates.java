@@ -110,12 +110,27 @@ class TransactionInfoState extends BankAppState {
 
     @Override
     public String getMenu() {
+        String descString;
+        
+        if ( transaction.getAmount() >= 0 ) {
+            descString = "Deposit amount: $" + to2DecimalPlaces(transaction.getAmount());
+        }
+        else {
+            // Report a positive number but note that it is a withdrawal.
+            // Otherwise we must report something like:
+            // Transaction amount: $-3.54
+            // or
+            // Transaction amount: -$3.54
+            // and neither one looks right to me.
+            descString = "Withdrawal amount: $" + to2DecimalPlaces(-transaction.getAmount());
+        }
+        
         return "===Transaction Information===\n" + 
                 "\n" + "Account number: " + account.getId() + "\n" + 
                 "Account type: " + account.getType() + "\n" + 
                 "\n" + 
                 "Transaction id: " + transaction.getId() + "\n"+ 
-                "Transaction amount: $" + transaction.getAmount() + "\n" + 
+                descString + "\n" + 
                 "\n" + 
                 "New balance: $" + to2DecimalPlaces(newBalance) + "\n" + "\n";
     }
@@ -155,7 +170,10 @@ class DepositState extends BankAppState {
 
     @Override
     public String getMenu() {
-        return "===Deposit to account " + account.getId() + " ===\n" + "\n" + "Current balance: " + balance + "\n"
+        String balanceString = to2DecimalPlaces(balance);
+        
+        return "===Deposit to account " + account.getId() + 
+                " ===\n" + "\n" + "Current balance: $" + balanceString + "\n"
                 + "\n";
     }
 
@@ -245,7 +263,8 @@ class WithdrawState extends BankAppState {
 
     @Override
     public String getMenu() {
-        return "===Withdraw from account " + account.getId() + " ===\n" + "\n" + "Current balance: " + balance + "\n"
+        return "===Withdraw from account " + account.getId() + " ===\n" + 
+               "\n" + "Current balance: $" + to2DecimalPlaces(balance) + "\n"
                 + "\n";
     }
 
