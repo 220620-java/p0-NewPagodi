@@ -66,14 +66,6 @@ class TransactionHistory  extends BankAppState {
                 String balanceStr = to2DecimalPlaces(transaction.getBalance());
                 builder.append(padTo(balanceStr,10));
                 builder.append("\n");
-//                builder.append("id:");
-//                builder.append(transaction.getId());
-//                builder.append("  date:");
-//                builder.append(transaction.getDatetime());
-//                builder.append("  amount:");
-//                builder.append(to2DecimalPlaces(transaction.getAmount()));
-//                builder.append("  balance:");
-//                builder.append(to2DecimalPlaces(transaction.getBalance()));
             }
             builder.append("\n");
         }
