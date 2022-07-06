@@ -214,8 +214,9 @@ class ViewAccountsMenuState extends BankAppState {
                 Account account = accounts.get(i);
                 
                 builder.append(i+1);
-                builder.append(") " + account.getId() + " " + account.getType()
-                    + "\n");
+                builder.append(") Account number " + account.getId() +
+                               " (" + account.getType() + 
+                               ")\n");
             }
         }
         
