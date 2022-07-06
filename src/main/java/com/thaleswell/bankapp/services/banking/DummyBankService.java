@@ -4,6 +4,13 @@ import java.text.DecimalFormat;
 
 import com.thaleswell.tui.io.IIO;
 
+/**
+ * A dummy implementation of of the IBankService interface. This class simply
+ * prints some diagnostic messages to the console upon performing each
+ * service action and does no other work.
+ * 
+ * @author michael
+ */
 public class DummyBankService implements IBankService{
 
     private IIO io;
