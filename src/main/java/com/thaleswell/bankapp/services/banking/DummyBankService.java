@@ -30,7 +30,10 @@ public class DummyBankService implements IBankService{
 
     @Override
     public boolean acceptDeposit(double deposit) {
-        io.sendLine("Receiving " + deposit + ".");
+        DecimalFormat df = new DecimalFormat("#.00");
+        String depositStr =  df.format(deposit);
+        
+        io.sendLine("Receiving $" + depositStr + ".");
         return true;
     }
 }
