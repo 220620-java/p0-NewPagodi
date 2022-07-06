@@ -1,5 +1,10 @@
 package com.thaleswell.bankapp.ds;
 
+/**
+ * The generic interface used for all list objects in this application.
+ *
+ * @param <T> The datatype of the objects stored in the list.
+ */
 public interface List<T> {
     /**
      * Adds an element to the end of the list.

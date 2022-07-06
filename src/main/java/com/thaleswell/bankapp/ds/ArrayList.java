@@ -1,5 +1,14 @@
 package com.thaleswell.bankapp.ds;
 
+/**
+ * An implementation of the List interface backed by a simple array object.
+ * The backing array is replaced with a larger (and all data is copied to the
+ * new one) when more storage is needed.
+ * 
+ * @author michael
+ *
+ * @param <T>
+ */
 public class ArrayList<T> implements List<T> {
     // Private data
     private T[] objectArray;
