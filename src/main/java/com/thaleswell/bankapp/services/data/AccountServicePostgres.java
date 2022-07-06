@@ -38,7 +38,6 @@ public class AccountServicePostgres implements IAccountService{
 
     @Override
     public double getAccountBalance(Account account) {
-        // TODO Auto-generated method stub
         return accountDAO.getAccountBalance(account);
     }
 

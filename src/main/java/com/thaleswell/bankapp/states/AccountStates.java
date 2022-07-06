@@ -25,7 +25,6 @@ class BankAccountCreatedState extends BankAppState {
 
     @Override
     public IState getNext() {
-        // TODO Auto-generated method stub
         return new AccountsMenuState(getIO());
     }
 }

@@ -85,7 +85,6 @@ class TransactionHistory  extends BankAppState {
 
     @Override
     public IState getNext() {
-        // TODO Auto-generated method stub
         return new AccountInfoState(getIO(), account);
     }
 }
