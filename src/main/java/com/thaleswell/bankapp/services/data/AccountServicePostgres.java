@@ -9,6 +9,11 @@ import com.thaleswell.bankapp.exceptions.UnknownAccountTypeException;
 import com.thaleswell.bankapp.models.Account;
 import com.thaleswell.bankapp.models.User;
 
+/**
+ * As implementation of IAccountService using a PostgreSQL database.
+ * 
+ * @author michael
+ */
 public class AccountServicePostgres implements IAccountService{
     private UserDAO userDao;
     private AccountDAO accountDAO;

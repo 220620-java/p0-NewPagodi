@@ -5,6 +5,11 @@ import com.thaleswell.bankapp.data.UserPostgres;
 import com.thaleswell.bankapp.exceptions.UsernameAlreadyExistsException;
 import com.thaleswell.bankapp.models.User;
 
+/**
+ * As implementation of IUserService using a PostgreSQL database.
+ * 
+ * @author michael
+ */
 public class UserServicePostgres implements IUserService {
     private UserDAO userDao;
 

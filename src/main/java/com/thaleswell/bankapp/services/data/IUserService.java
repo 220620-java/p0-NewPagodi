@@ -3,6 +3,12 @@ package com.thaleswell.bankapp.services.data;
 import com.thaleswell.bankapp.exceptions.UsernameAlreadyExistsException;
 import com.thaleswell.bankapp.models.User;
 
+/**
+ * The interface for transaction services. This interface provides the application
+ * with the methods it needs to store and retrieve information from the database
+ * relating to bank users.
+ * 
+ */
 public interface IUserService {
     /**
      * Creates a new user in the application and returns the newly 

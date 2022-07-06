@@ -11,6 +11,11 @@ import com.thaleswell.bankapp.exceptions.TransactionOverdraftException;
 import com.thaleswell.bankapp.models.Account;
 import com.thaleswell.bankapp.models.Transaction;
 
+/**
+ * As implementation of ITransactionService using a PostgreSQL database.
+ * 
+ * @author michael
+ */
 public class TransactionServicePostgres implements ITransactionService{
 
     private TransactionDAO transactionDAO;
