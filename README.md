@@ -8,6 +8,8 @@ Application users are presented with a small menu and given a prompt based
 on the options in the menu. Once a user enters a selection, the application
 moves to a new state and the process repeats with a new menu and a new prompt.
 
+![alt text](../media/menu.png?raw=true)
+
 With this interface, users can create a system account or login to an existing
 account. Once logged into the system, users can create a new bank account,
 deposit money into an existing account, view the transaction history, and so on.
