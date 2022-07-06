@@ -2,6 +2,10 @@ package com.thaleswell.bankapp.models;
 
 import java.util.Objects;
 
+/**
+ * Models a user of this banking application.
+ *
+ */
 public class User {
     private int id;
     private String username;
@@ -21,26 +25,56 @@ public class User {
         this.password = password;
     }
 
+    /**
+     * Get's the id assigned to this user by the database.
+     * 
+     * @return The user's id.
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Sets the id for this user object.
+     * 
+     * @param id The user's id.
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * Get's the username for this user.
+     * 
+     * @return The user's username.
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * Sets the username for this object.
+     * 
+     * @param username The user's username.
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     * Gets the password for this user object.
+     * 
+     * @return The user's password.
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * Sets the password for this object.
+     * 
+     * @param password The user's password.
+     */
     public void setPassword(String password) {
         this.password = password;
     }
